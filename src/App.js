@@ -1,23 +1,16 @@
-import logo from './logo.svg';
+import { useEffect } from 'react';
 import './App.css';
+import setupMockServer from './mock-server';
 
-function App() {
+const App=()=>{
+
+  const data =  fetch('/api/products').then(res => console.log(res))
+  console.log(data)
+
+ // const data =  setupMockServer('/api/products').then(res => console.log(res.data))
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <h1>hhh</h1>
     </div>
   );
 }
