@@ -13,8 +13,10 @@ const reducerFunction = (state , action) =>{
             return {...state , filterPrice : action.payload}
         case 'IS_RECOMMENDED' : 
             return {...state , recommended : !state.recommended}
-            case 'INCLUDE_OUT_OF_STOCK' : 
+        case 'INCLUDE_OUT_OF_STOCK' : 
             return {...state , includeOutOfStock : !state.includeOutOfStock}
+        default :
+            return state
 
 
     }

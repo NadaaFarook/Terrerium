@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect} from 'react'
 import { useFilter } from '../../Context-Reducer/FilterContext'
-import {Navigate, useNavigate} from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 const Filters = () => {
 
     const {state , dispatch} = useFilter()

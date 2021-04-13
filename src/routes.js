@@ -1,11 +1,9 @@
 import React from 'react'
 
-import {Routes , Route , useLocation} from 'react-router-dom'
-import { useFilter } from './Context-Reducer/FilterContext.js'
+import {Routes , Route} from 'react-router-dom'
 import { Error404 ,Cart ,Home ,Login ,ProductListing ,ProductPage ,Wishlist} from './pages/index.js'
 
 const RoutesHolder = () =>{
-    const  {state} = useFilter()
     return(
         <div>
             <Routes>

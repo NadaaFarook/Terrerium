@@ -2,13 +2,10 @@ import React  , { useState , useEffect}from 'react'
 import axios from 'axios'
 import {useLocation } from 'react-router-dom'
 import Loader from '../../UI_components/loader'
-import { useFilter } from '../../Context-Reducer/FilterContext'
 const Products = () => {
     const [data, setData] = useState([])
    const [loader , setLoader] = useState(true)
    const query = new URLSearchParams(useLocation().search)
-const {state} = useFilter()
-
    useEffect(() => {
     const fetchData = async () => {
       const result = await axios('/api/products');
@@ -65,7 +62,7 @@ return(
                 <div key={id}>
                     <img style={{width: '150px',
     height: '100px',
-}} src={image} />
+}} src={image} alt="ygjbjbk" />
                     <h4>{name}</h4>
                    <div className="flex"> <p>{price - price*discount/100}</p>
                     <p style={{textDecoration : 'line-through'}}>{price}</p>
