@@ -15,6 +15,7 @@ const Products = () => {
  
     fetchData();
   } , [])
+ console.log(data)
 
   const sortBy = query.get('sortBy').slice(1,-1)
   const filterRating = JSON.parse(query.get('filterRating'))
