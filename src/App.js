@@ -1,18 +1,32 @@
-import { useEffect } from 'react';
+
 import './App.css';
-import setupMockServer from './mock-server';
+import axios from 'axios'
+import React, { useState, useEffect } from 'react'
+// import useAxios from './customHooks/useAxios'
+// import Loader from './UI_components/loader';
+import {Link} from 'react-router-dom';
+import RoutesHolder from './routes'
 
-const App=()=>{
 
-  const data =  fetch('/api/products').then(res => console.log(res))
-  console.log(data)
-
- // const data =  setupMockServer('/api/products').then(res => console.log(res.data))
+export default function App() {
+  
   return (
-    <div className="App">
-    <h1>hhh</h1>
+    <div>
+    {/* {loader &&  <Loader />} */}
+    <Link to="/products">Products</Link> ||
+    <Link to="/cart">Cart</Link>
+    
+    {/* {
+      data.map(({name , price})=>{
+        return(
+          <div>
+            <h3>{name}</h3>
+            <p>$ {price}</p>
+          </div>
+        )
+      })
+    } */}
+<RoutesHolder />
     </div>
-  );
+  )
 }
-
-export default App;
