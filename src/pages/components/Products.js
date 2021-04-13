@@ -17,7 +17,7 @@ const Products = () => {
   } , [])
  console.log(data)
 
-  const sortBy = query.get('sortBy').slice(1,-1)
+  const sortBy = query.get('sortBy')
   const filterRating = JSON.parse(query.get('filterRating'))
   const recommended = JSON.parse(query.get('recommended'))
   const  includeOutOfStock = JSON.parse(query.get(' includeOutOfStock'))
