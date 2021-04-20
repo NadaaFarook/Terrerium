@@ -1,24 +1,21 @@
-import React, { useEffect} from 'react'
+import React from 'react'
 import { useFilter } from '../../Context-Reducer/FilterContext'
-import { useNavigate} from 'react-router-dom'
 const Filters = () => {
 
     const {state , dispatch} = useFilter()
-    const {filterPrice , filterRating , sortBy , recommended ,  includeOutOfStock} = state
+    const {filterPrice } = state
     const {min , max} = filterPrice
-    const navigate = useNavigate()
     const rating = [4,3,2,1]
-    useEffect(()=>{
-        navigate(`?sortBy="${sortBy}"&filterRating="${filterRating}"&recommended="${recommended}"&includeOutOfStock="${includeOutOfStock}"&min="${min}"&max="${max}"`)
-    } , [sortBy , recommended , filterPrice , filterRating , min ,max , includeOutOfStock , navigate])
+    
 return(
     <div className="Filters">
+        <h1><button onClick={()=>dispatch({type : 'CLEAR_ALL'})}>Clear All</button></h1>
         <fieldset>
             <legend>Sort</legend>
             <input
                 type="radio"
-                defaultChecked
                 name="sort"
+                checked={state.sortBy === 'HIGH_TO_LOW'}
                 onChange={()=>dispatch({type : 'SORT' , payload : 'HIGH_TO_LOW' })}
             />
             <label>Sort - High to Low</label>
@@ -26,6 +23,7 @@ return(
             <input
                 type="radio"
                 name="sort"
+                checked={state.sortBy === 'LOW_TO_HIGH'}
                 onChange={()=>dispatch({type : 'SORT' , payload : 'LOW_TO_HIGH' })}
             />
             <label>Sort - Low to High</label>
@@ -38,6 +36,7 @@ return(
                         <>
             <input type="radio"
             name="rating"
+            checked={state.filterRating === stars}
              onChange={()=>dispatch({type : 'FILTER_RATING' , payload : stars })} />
             <label>{stars} stars & above</label>
             <br />
@@ -81,6 +80,7 @@ return(
         <fieldset>
             <input type="checkbox"
             onChange={()=>dispatch({type : 'IS_RECOMMENDED'})}
+           checked={state.recommended}
              />
              <label>
              Reccommended by Terrerium

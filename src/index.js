@@ -7,11 +7,13 @@ import { BrowserRouter as Router} from 'react-router-dom'
 import setupMockServer from './api/mockServer'
 import UserDataContextProvider from './Context-Reducer/UserDatacontext';
 import FilterContextProvider from './Context-Reducer/FilterContext';
+import ProductDataContextProvider from './Context-Reducer/productDataContext';
 
 setupMockServer()
 
 ReactDOM.render(
   <React.StrictMode>
+    <ProductDataContextProvider>
     <UserDataContextProvider>
       <FilterContextProvider>
     <Router>
@@ -19,6 +21,7 @@ ReactDOM.render(
     </Router>
     </FilterContextProvider>
     </UserDataContextProvider>
+    </ProductDataContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

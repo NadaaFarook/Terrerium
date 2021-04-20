@@ -1,13 +1,14 @@
-import React from 'react'
-import Products from './components/Products'
-import Filters from './components/Filters'
+import React from "react";
+import Products from "./components/Products";
+import Filters from "./components/Filters";
 
 const ProductListing = () => {
-return(
+  return (
     <div className="ProductListing flex">
-        <Filters /><Products />
+      <Filters />
+      <Products />
     </div>
-)
-}
+  );
+};
 
-export default ProductListing
+export default ProductListing;
