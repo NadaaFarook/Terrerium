@@ -67,7 +67,7 @@ const Products = () => {
                 <div className="buttons">
                   <button
                     onClick={() => {
-                      user.name === null
+                      user.name === undefined
                         ? toast({
                             title: "Please login/signup to add to cart",
                             status: "info",
