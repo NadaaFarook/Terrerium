@@ -6,6 +6,8 @@ import Home from './Home'
 import Login from './Login'
 import ProductListing from './ProductListing'
 import ProductPage from './ProductPage'
+import SignUp from './SignUp'
+import User from './User'
 import Wishlist from './Wishlist'
 
 export {
@@ -15,5 +17,7 @@ export {
     Login ,
     ProductListing ,
     ProductPage ,
-    Wishlist
+    Wishlist,
+    User,
+    SignUp
 }

@@ -1,11 +1,14 @@
-import React from 'react'
+import React from "react";
+// mport { useUserData } from '../Context-Reducer/UserDatacontext'
 
 const Home = () => {
-return(
+  // const {user} = useUserData()
+  return (
     <div className="Home">
-        <p>Home</p>
+      <h1>Homepage under construction 🔨🔧</h1>
+      {/* {user.name !== null  && <p style={{backgroundColor : 'rgb(230 255 222)'}}>Hellloo {user.name}</p>} */}
     </div>
-)
-}
+  );
+};
 
-export default Home
+export default Home;

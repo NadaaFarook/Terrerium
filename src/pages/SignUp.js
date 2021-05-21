@@ -1,37 +1,49 @@
 import { useToast } from "@chakra-ui/toast";
+import axios from "axios";
 import React, { useReducer } from "react";
 import { Link } from "react-router-dom";
 import { useUserData } from "../Context-Reducer/UserDatacontext";
-import axios from "axios";
-const Login = () => {
+export default function SignUp() {
   const { setUser } = useUserData();
-  const toast = useToast();
   const [state, dispatch] = useReducer(
     (state, action) => {
       return { ...state, [action.type]: action.payload };
     },
     {
+      name: null,
       email: null,
       password: null,
     }
   );
+
+  const toast = useToast();
+  // const { response , apiCall } = useAxios();
   return (
-    <div className="Login">
-      <Link to="/">Home</Link>
-      <h1>Login User</h1>
+    <div>
+      <h1>SignUp User</h1>
       <form>
-        <label>Enter Email</label>
+        <label>Enter Name</label>
         <input
-          type="text"
-          placeholder="Enter Email"
-          onClick={(e) => dispatch({ type: "email", payload: e.target.value })}
+          required
+          type="name"
+          placeholder="Enter Name"
+          onChange={(e) => dispatch({ type: "name", payload: e.target.value })}
         />
         <br />
-        <label>Enter Password</label>
+        <label>Enter Email</label>
         <input
+          required
+          type="email"
+          placeholder="Enter Email"
+          onChange={(e) => dispatch({ type: "email", payload: e.target.value })}
+        />
+        <br />
+        <label>Create Password</label>
+        <input
+          required
           type="password"
-          placeholder="Enter Password"
-          onClick={(e) =>
+          placeholder="Password"
+          onChange={(e) =>
             dispatch({ type: "password", payload: e.target.value })
           }
         />
@@ -41,25 +53,25 @@ const Login = () => {
             e.preventDefault();
 
             const response = await axios.post(
-              "https://Terrarium-Backend.nadaafarook.repl.co/users/login",
+              "https://Terrarium-Backend.nadaafarook.repl.co/users/signup",
               state
             );
 
             if (response.data.success === true) {
               setUser({
-                name: response.data.user.name,
-                email: response.data.user.email,
-                id: response.data.user._id,
+                name: response.data.Newuser.name,
+                email: response.data.Newuser.email,
+                id: response.data.Newuser._id,
               });
               toast({
-                title: "User logined successfully",
+                title: "User added successfully",
                 status: "success",
                 duration: 3000,
                 isClosable: true,
               });
             } else {
               toast({
-                title: "Error in logging in",
+                title: "Error in adding a user",
                 status: "error",
                 duration: 3000,
                 isClosable: true,
@@ -71,10 +83,8 @@ const Login = () => {
         </button>
       </form>
       <p>
-        Not a user yet ? <Link to="/signup">SignUp</Link>
+        Already a user ? <Link to="/login">Login</Link>
       </p>
     </div>
   );
-};
-
-export default Login;
+}

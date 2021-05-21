@@ -1,66 +1,117 @@
-import React from "react";
-import { useProductData } from "../Context-Reducer/productDataContext";
+//146
+import { useToast } from "@chakra-ui/toast";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useCartData } from "../Context-Reducer/CartData";
 import { useUserData } from "../Context-Reducer/UserDatacontext";
+import CartFunctions from "../utils/CartFunctions";
+
+import "../App.css";
 
 const Cart = () => {
-  const { data } = useProductData();
-  const { UserData, setUserData } = useUserData();
+  const { AddToCartApiCall, RemoveFromCartApiCall, DeleteFromCartApiCall } =
+    CartFunctions();
 
-  //    // const cartId
-  const cartIds = UserData.cart;
+  const { user } = useUserData();
+  const [data, setData] = useState([]);
+  const { cartContext, setCartContext } = useCartData();
+  // eslint-disable-next-line no-unused-vars
+  const [loader, setLoader] = useState(true);
+  const toast = useToast();
 
-  const cartData = cartIds.map((id) =>
-    data.find((product) => product.id === id)
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(
+        "https://Terrarium-Backend.nadaafarook.repl.co/cart/" + user.id
+      );
+
+      if (result.data.success === true) {
+        setData([...result.data.cart.products]);
+        setCartContext([...result.data.cart.products]);
+        setLoader(false);
+      } else {
+        setLoader(false);
+        toast({
+          title: "Error in fetching user cart. Please try again",
+          status: "error",
+        });
+      }
+    };
+    fetchData();
+  }, [cartContext, setCartContext, toast, user.id, setLoader]);
+
   const func = (state, value) => {
     return {
-      totalPrice: Number(state.totalPrice) + Number(value.price),
-      discountPrice: state.discountPrice + (value.price * value.discount) / 100,
+      totalPrice: Number(state.totalPrice) + Number(value.productId.price),
+      discountPrice:
+        state.discountPrice +
+        (value.productId.price * value.productId.discount) / 100,
     };
   };
 
-  const state = cartData.reduce(func, { totalPrice: 0, discountPrice: 0 });
-  console.log(state.totalPrice, "pr");
+  const state = data.reduce(func, { totalPrice: 0, discountPrice: 0 });
+
   return (
     <div className="Cart">
-      {cartData.length === 0 ? (
-        <div>
-          <h2 className="p-2 center">No products added in cart</h2>
-        </div>
-      ) : (
-        cartData.map(({ name, price, description, id, discount }) => {
-          return (
-            <div>
-              <h2>{name}</h2>
-              <p>{price}</p>
-              <p>{description}</p>
-              <p>{discount}</p>
-              <button>Add to cart</button>
-
-              <button
-                onClick={() =>
-                  setUserData({
-                    ...UserData,
-                    cart: UserData.cart.filter((idd) => idd !== id),
-                  })
-                }
-              >
-                Remove from cart
-              </button>
-            </div>
-          );
-        })
-      )}
-
+      <div>
+        {" "}
+        {data.length === 0 ? (
+          <div>
+            <h2 className="p-2 center">No products added in cart</h2>
+          </div>
+        ) : (
+          data.map(
+            ({
+              productId: { name, price, description, image, _id, discount },
+              quantity,
+              _id: id,
+            }) => {
+              return (
+                <div
+                  key={id}
+                  className="cart-card"
+                  style={{ border: "1px solid grey" }}
+                >
+                  <img src={image} alt="" />
+                  <div key={_id}>
+                    {" "}
+                    <h1>{name}</h1>
+                    <h3>$ {price}</h3>
+                    <p>{description}</p>
+                    <span>Discount : {discount} %</span>
+                    <br />
+                    <span>Total price : {price * quantity}</span>
+                    <br />
+                    <button
+                      onClick={() => RemoveFromCartApiCall(user.id, _id, id)}
+                    >
+                      -
+                    </button>
+                    {quantity}
+                    <button onClick={() => AddToCartApiCall(user.id, _id, id)}>
+                      +
+                    </button>
+                    <button
+                      onClick={() => DeleteFromCartApiCall(user.id, _id, id)}
+                    >
+                      Remove from cart
+                    </button>
+                  </div>
+                </div>
+              );
+            }
+          )
+        )}
+      </div>
       <div className="price_card">
         <p>
-          Total price <span>${state.totalPrice}</span>
+          Total price : <span>${state.totalPrice}</span>
         </p>
         <p>
-          Total discount <span>${state.discountPrice}</span>
+          Total discount : <span>${state.discountPrice}</span>
         </p>
         <h3>
-          Final Price <span>${state.totalPrice - state.discountPrice}</span>
+          Final Price : <span>${state.totalPrice - state.discountPrice}</span>
         </h3>
       </div>
     </div>
