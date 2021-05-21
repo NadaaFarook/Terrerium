@@ -9,6 +9,7 @@ import { useCartData } from "../../Context-Reducer/CartData";
 import { getsortedData, getFilteredData } from "../../utils/Products_Functions";
 const Products = () => {
   const { user } = useUserData();
+  console.log(user , typeof(user.name))
   const toast = useToast();
   const { cartContext, setCartContext } = useCartData();
   const { state } = useFilter();
@@ -67,7 +68,7 @@ const Products = () => {
                 <div className="buttons">
                   <button
                     onClick={() => {
-                      user.name === null
+                      user.name === undefined
                         ? toast({
                             title: "Please login/signup to add to cart",
                             status: "info",
